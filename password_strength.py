@@ -8,25 +8,25 @@ def load_black_list():
 
 
 def find_symbol_in_password(password):
-    result = 0
+    count_of_matches = 0
     for reg_exp in (r'\d',
                     r'[a-z]',
                     r'[A-Z]',
                     r'[~!@#$%^&*()_+`\-={}[\]:;<>./\\]'):
         if re.search(reg_exp, password):
-            result += 1
-    return result
+            count_of_matches += 1
+    return count_of_matches
 
 
 def password_length(password):
-    result = 0
+    count_of_matches = 0
     unique_symbol_rate = 0.8
     if len(set(password)) > len(password) * unique_symbol_rate:
-        result += 3
-    for length in [6, 10]:
+        count_of_matches += 3
+    for length in [6, 12]:
         if len(password) >= length:
-            result += 1
-    return result
+            count_of_matches += 1
+    return count_of_matches
 
 
 def get_password_strength(password, black_list):
