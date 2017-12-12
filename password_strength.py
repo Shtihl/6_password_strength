@@ -4,8 +4,8 @@ from string import punctuation
 
 
 def load_black_list():
-    with open('./passwords.txt', 'r') as black_list_passwords:
-        return black_list_passwords.read().splitlines()
+    with open('./passwords.txt', 'r') as forbidden_passwords:
+        return forbidden_passwords.read().splitlines()
 
 
 def find_pattern_in_password(password):
