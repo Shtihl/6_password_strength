@@ -1,5 +1,6 @@
 import re
 from getpass import getpass
+from string import punctuation
 
 
 def load_black_list():
@@ -7,26 +8,32 @@ def load_black_list():
         return black_list_passwords.read().splitlines()
 
 
-def find_symbol_in_password(password):
-    count_of_matches = 0
-    for reg_exp in (r'\d',
-                    r'[a-z]',
-                    r'[A-Z]',
-                    r'[~!@#$%^&*()_+`\-={}[\]:;<>./\\]'):
+def find_pattern_in_password(password):
+    count_of_pattern = 0
+    for reg_exp in ('\d',
+                    '[a-z]',
+                    '[A-Z]',
+                    '[{}]'.format(punctuation)):
         if re.search(reg_exp, password):
-            count_of_matches += 1
-    return count_of_matches
+            count_of_pattern += 1
+    return count_of_pattern
 
 
-def password_length(password):
+def password_length_check(password):
     count_of_matches = 0
-    unique_symbol_rate = 0.8
-    if len(set(password)) > len(password) * unique_symbol_rate:
-        count_of_matches += 3
-    for length in [6, 12]:
+    length_limit = [6, 12]
+    for length in length_limit:
         if len(password) >= length:
             count_of_matches += 1
     return count_of_matches
+
+
+def password_uniqueness_check(password):
+    password_uniqueness = 0
+    unique_symbol_rate = 0.8
+    if len(set(password)) > len(password) * unique_symbol_rate:
+        password_uniqueness += 3
+    return password_uniqueness
 
 
 def get_password_strength(password, black_list):
@@ -34,9 +41,10 @@ def get_password_strength(password, black_list):
     if password in black_list or len(password) < 6:
         return strength_points
     else:
-        strength_points = strength_points + \
-                          password_length(password) + \
-                          find_symbol_in_password(password)
+        strength_points = (strength_points +
+                           password_length_check(password) +
+                           find_pattern_in_password(password) +
+                           password_uniqueness_check(password))
         return strength_points
 
 
