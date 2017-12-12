@@ -1,6 +1,6 @@
 # Password Strength Calculator
 
-This script define your password strength from 0 to 10
+This script define your password strength from 1 to 10
 
 # Usage
 

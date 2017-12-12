@@ -8,7 +8,7 @@ def load_black_list():
 
 
 def get_password_strength(password, black_list):
-    strength_points = 0
+    strength_points = 1
     unique_symbol_rate = 0.8
     if password in black_list or len(password) < 6:
         return strength_points
@@ -22,7 +22,7 @@ def get_password_strength(password, black_list):
         strength_points += 1
     if re.search(r"[~!@#$%^&*()_+`\-={}[\]:;<>./\\]", password):
         strength_points += 2
-    length_list = [6, 10, 16]
+    length_list = [6, 10]
     for length in length_list:
         if len(password) >= length:
             strength_points += 1
