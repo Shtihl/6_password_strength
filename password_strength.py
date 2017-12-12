@@ -13,17 +13,14 @@ def get_password_strength(password, black_list):
     if password in black_list or len(password) < 6:
         return strength_points
     if len(set(password)) > len(password) * unique_symbol_rate:
-        strength_points += 2
-    if re.search(r"\d", password):
-        strength_points += 1
-    if re.search(r"[a-z]", password):
-        strength_points += 1
-    if re.search(r"[A-Z]", password):
-        strength_points += 1
-    if re.search(r"[~!@#$%^&*()_+`\-={}[\]:;<>./\\]", password):
-        strength_points += 2
-    length_list = [6, 10]
-    for length in length_list:
+        strength_points += 3
+    for reg_exp in (r'\d',
+                    r'[a-z]',
+                    r'[A-Z]',
+                    r'[~!@#$%^&*()_+`\-={}[\]:;<>./\\]'):
+        if re.search(reg_exp, password):
+            strength_points += 1
+    for length in [6, 10]:
         if len(password) >= length:
             strength_points += 1
     return strength_points
