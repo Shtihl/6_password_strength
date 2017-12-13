@@ -22,12 +22,12 @@ def find_pattern_in_password(password):
     return count_of_pattern
 
 
-def password_length_points_score(password):
+def password_length_points_count(password):
     password_length_points = 0
-    min_length = 6
+    min_acceptable_length = 6
     acceptable_length = 12
     length_limit = [
-        min_length,
+        min_acceptable_length,
         acceptable_length
     ]
     for length in length_limit:
@@ -46,12 +46,13 @@ def password_uniqueness_check(password):
 
 def get_password_strength(password, black_list):
     strength_points_result = 1
-    if password in black_list or len(password) < 6:
+    min_acceptable_length = 6
+    if password in black_list or len(password) < min_acceptable_length:
         return strength_points_result
     else:
         strength_points = [
             strength_points_result,
-            password_length_points_score(password),
+            password_length_points_count(password),
             find_pattern_in_password(password),
             password_uniqueness_check(password)
         ]
